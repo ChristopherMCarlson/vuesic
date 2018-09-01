@@ -28,8 +28,8 @@
                 <audio controls>
                   <source :src=song.previewUrl type="audio/mpeg"> Your browser does not support the audio element.
                 </audio>
-                <button class="button">
-                  Add to playlist
+                <button class="button" @click="deleteFromPlaylist(song._id)">
+                  Remove from playlist
                 </button>
               </div>
             </div>
@@ -51,7 +51,7 @@
                 <audio controls>
                   <source :src=song.previewUrl type="audio/mpeg"> Your browser does not support the audio element.
                 </audio>
-                <button class="button">
+                <button class="button" @click="addToPlaylist(song)">
                   Add to playlist
                 </button>
               </div>
@@ -73,7 +73,7 @@
       HelloWorld
     },
     mounted() {
-      this.$store.dispatch(getPlaylist)
+      this.$store.dispatch('getPlaylist');
     },
     computed: {
       searchResults() {
@@ -88,8 +88,19 @@
         let search = "search?term=" + event.target.name.value
         this.$store.dispatch("getQuery", search)
       },
-      addToPlaylist(song) {
+      addToPlaylist(data) {
+        let song = {
+          "trackName": data.trackName,
+          "artistName": data.artistName,
+          "collectionName": data.collectionName,
+          "previewUrl": data.previewUrl,
+          "albumArt": data.artworkUrl100,
+          "trackId": data.trackId
+        }
         this.$store.dispatch("addToPlaylist", song)
+      },
+      deleteFromPlaylist(id) {
+        this.$store.dispatch('deleteFromPlaylist', id)
       }
     }
   }

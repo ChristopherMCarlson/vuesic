@@ -41,7 +41,13 @@ export default new Vuex.Store({
       })
     },
     addToPlaylist({ commit, dispatch }, song) {
-      playlistApi.post('' + song)
+      playlistApi.post('', song)
+        .then(res => {
+          dispatch('getPlaylist')
+        })
+    },
+    deleteFromPlaylist({ commit, dispatch }, id) {
+      playlistApi.delete('' + id)
         .then(res => {
           dispatch('getPlaylist')
         })
