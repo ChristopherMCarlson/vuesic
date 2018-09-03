@@ -1,12 +1,12 @@
 <template>
   <div>
     <header class="header">
-      <div>
+      <div class="title-top">
         Music is fun
       </div>
-      <form @submit.prevent="getQuery($event)">
+      <form @submit.prevent="getQuery($event)" class="row">
         <input type="text" name="name" autocomplete="off" placeholder="Search"><br>
-        <button class="new-game-button" type="submit">Submit</button>
+        <button class="button-submit  " type="submit">Submit</button>
       </form>
     </header>
 
@@ -113,28 +113,33 @@
 
 <style>
   html {
-    background-color: #363434;
+    background-color: #0b0b0d;
   }
 
   .header {
     display: flex;
-    background-color: #62929a;
+    background-color: #474a56;
     justify-content: space-between;
     align-content: center;
     height: 5%;
-    color: #efecec;
+    color: #d3d5fd;
+  }
+
+  .title-top {
+    font-size: 2rem;
+    padding: 1% 0% 1% 2%;
   }
 
   .main-page {
     display: flex;
-    background-color: #5c5757;
+    background-color: #929aab;
   }
 
   .title {
     display: flex;
     justify-content: flex-start;
     width: 50vw;
-    color: #efecec;
+    color: #eaeaea;
     flex-direction: column;
   }
 
@@ -151,11 +156,11 @@
 
   .music-card {
     display: flex;
-    background-color: #62929a;
-    color: #363434;
+    background-color: #474a56;
+    color: #929aab;
     margin: 1% 1% 1% 1%;
     flex-direction: column;
-    outline: #363434 solid 1px;
+    outline: #929aab solid 1px;
     justify-content: center;
     align-content: center;
   }
@@ -170,15 +175,15 @@
   }
 
   img {
-    max-height: 90px;
-    max-width: 90px;
+    max-height: 85px;
+    max-width: 85px;
   }
 
   .button {
-    background-color: #62929a;
+    background-color: #474a56;
     border-radius: 12px;
-    border: 2px solid #363434;
-    color: #363434;
+    border: 2px solid #929aab;
+    color: #929aab;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -190,13 +195,12 @@
 
   .button:hover {
     background-color: #363636;
-    color: #efecec;
-    border: 2px solid #efecec;
+    color: #eaeaea;
   }
 
   .scroll {
     overflow-y: auto;
-    height: 85vh;
+    height: 81vh;
   }
 
   .column {
@@ -216,14 +220,47 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #efecec;
+    background: #d3d5fd;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #62929a;
+    background: #474a56;
   }
 
   audio {
     max-width: 17vw;
+  }
+
+  input[type=text] {
+    border: none;
+    border-bottom: 2px solid #929aab;
+    background-color: #474a56;
+    color: #d3d5fd;
+    transition: border-bottom 500ms ease-out;
+  }
+
+  input:focus {
+    outline: none;
+    border-bottom: 2px solid #d3d5fd;
+  }
+
+  .button-submit {
+    background-color: #474a56;
+    border-radius: 12px;
+    border: 2px solid #929aab;
+    color: #929aab;
+    padding: 2px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 300ms linear, color 300ms linear;
+    cursor: pointer;
+    margin: 0% 15% 0% 0%;
+  }
+
+  .button-submit:hover {
+    background-color: #363636;
+    color: #eaeaea;
   }
 </style>
