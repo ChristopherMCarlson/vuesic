@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from './router'
+import vuescroll from 'vue-scroll'
+
+Vue.use(vuescroll)
 
 let iTunesApi = axios.create({
   baseURL: 'https://itunes.apple.com',

@@ -16,21 +16,23 @@
           <div class="padding">
             Playlists
           </div>
-          <div class="row">
-            <div v-for="(song, index) in playlist" :key="index" class="music-card">
-              <div class="card-half">
-                <p>Track: {{song.trackName}}</p>
-                <p>Artist: {{song.artistName}}</p>
-                <p>Album: {{song.collectionName}}</p>
-              </div>
-              <div class="card-half">
-                <img :src=song.artworkUrl100 alt="">
-                <audio controls>
-                  <source :src=song.previewUrl type="audio/mpeg"> Your browser does not support the audio element.
-                </audio>
-                <button class="button" @click="deleteFromPlaylist(song._id)">
-                  Remove from playlist
-                </button>
+          <div class="scroll">
+            <div class="column">
+              <div v-for="(song, index) in playlist" :key="index" class="music-card">
+                <div class="row">
+                  <img :src=song.albumArt alt="">
+                  <div class="card-half">
+                    <p>Track: {{song.trackName}}</p>
+                    <p>Artist: {{song.artistName}}</p>
+                    <p>Album: {{song.collectionName}}</p>
+                  </div>
+                  <div class="card-half">
+                    <audio controls :src=song.previewUrl type="audio/mpeg" />
+                    <button class="button" @click="deleteFromPlaylist(song._id)">
+                      Remove from playlist
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -39,21 +41,23 @@
           <div class="padding">
             Search Results
           </div>
-          <div class="row">
-            <div v-for="(song, index) in searchResults" :key="index" class="music-card">
-              <div class="card-half">
-                <p>Track: {{song.trackName}}</p>
-                <p>Artist: {{song.artistName}}</p>
-                <p>Album: {{song.collectionName}}</p>
-              </div>
-              <div class="card-half">
-                <img :src=song.artworkUrl100 alt="">
-                <audio controls>
-                  <source :src=song.previewUrl type="audio/mpeg"> Your browser does not support the audio element.
-                </audio>
-                <button class="button" @click="addToPlaylist(song)">
-                  Add to playlist
-                </button>
+          <div class="scroll">
+            <div class="column">
+              <div v-for="(song, index) in searchResults" :key="index" class="music-card">
+                <div class="row">
+                  <img :src=song.artworkUrl100 alt="">
+                  <div class="card-half">
+                    <p>Track: {{song.trackName}}</p>
+                    <p>Artist: {{song.artistName}}</p>
+                    <p>Album: {{song.collectionName}}</p>
+                  </div>
+                  <div class="card-half">
+                    <audio controls :src=song.previewUrl type="audio/mpeg" />
+                    <button class="button" @click="addToPlaylist(song)">
+                      Add to playlist
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -140,7 +144,9 @@
 
   .row {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 
   .music-card {
@@ -149,20 +155,23 @@
     color: #363434;
     margin: 1% 1% 1% 1%;
     flex-direction: column;
-    outline: #363434 solid 1px
+    outline: #363434 solid 1px;
+    justify-content: center;
+    align-content: center;
   }
 
   .card-half {
     display: flex;
+    padding-left: 2%;
     padding-right: 2%;
-    margin: 1% 1% 1% 1%;
+    margin: 1% 0% 1% 0%;
     flex-direction: column;
-    justify-content: left;
+    justify-content: space-evenly;
   }
 
   img {
-    max-height: 100px;
-    max-width: 100px;
+    max-height: 90px;
+    max-width: 90px;
   }
 
   .button {
@@ -183,5 +192,38 @@
     background-color: #363636;
     color: #efecec;
     border: 2px solid #efecec;
+  }
+
+  .scroll {
+    overflow-y: auto;
+    height: 85vh;
+  }
+
+  .column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 20vw;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #efecec;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #62929a;
+  }
+
+  audio {
+    max-width: 17vw;
   }
 </style>
