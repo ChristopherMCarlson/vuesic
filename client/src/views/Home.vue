@@ -4,64 +4,16 @@
       <div class="title-top">
         Music is Fun
       </div>
-      <form @submit.prevent="getQuery($event)" class="row">
-        <input type="text" name="name" autocomplete="off" placeholder="Search"><br>
-        <button class="button-submit  " type="submit">Submit</button>
+      <form @submit.prevent="getQuery()" class="row">
+        <input type="text" name="name" autocomplete="off" placeholder="Search" v-model="query"><br>
+        <button class="button-submit" type="submit">Submit</button>
       </form>
     </header>
 
     <div>
       <div class="main-page">
-        <div class="title">
-          <div class="padding">
-            Playlists
-          </div>
-          <div class="scroll">
-            <div class="column">
-              <div v-for="(song, index) in playlist" :key="index" class="music-card">
-                <div class="row">
-                  <img :src=song.albumArt alt="">
-                  <div class="card-half">
-                    <p>Track: {{song.trackName}}</p>
-                    <p>Artist: {{song.artistName}}</p>
-                    <p>Album: {{song.collectionName}}</p>
-                  </div>
-                  <div class="card-half">
-                    <audio controls :src=song.previewUrl type="audio/mpeg" @play="pauseAll" />
-                    <button class="button" @click="deleteFromPlaylist(song._id)">
-                      Remove from playlist
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="title">
-          <div class="padding">
-            Search Results
-          </div>
-          <div class="scroll">
-            <div class="column">
-              <div v-for="(song, index) in searchResults" :key="index" class="music-card">
-                <div class="row">
-                  <img :src=song.artworkUrl100 alt="">
-                  <div class="card-half">
-                    <p>Track: {{song.trackName}}</p>
-                    <p>Artist: {{song.artistName}}</p>
-                    <p>Album: {{song.collectionName}}</p>
-                  </div>
-                  <div class="card-half">
-                    <audio controls :src=song.previewUrl type="audio/mpeg" @play="pauseAll" />
-                    <button class="button" @click="addToPlaylist(song)">
-                      Add to playlist
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <playlist />
+        <songs />
       </div>
     </div>
   </div>
@@ -69,51 +21,59 @@
 
 <script>
   // @ is an alias to /src
-  import HelloWorld from '@/components/HelloWorld.vue'
+  import playlist from '@/components/playlist.vue'
+  import songs from '@/components/songs.vue'
+
 
   export default {
     name: 'home',
     components: {
-      HelloWorld
+      playlist,
+      songs
+    },
+    data() {
+      return {
+        query: ''
+      }
     },
     mounted() {
       this.$store.dispatch('getPlaylist');
     },
-    computed: {
-      searchResults() {
-        return this.$store.state.results;
-      },
-      playlist() {
-        return this.$store.state.playlist;
-      }
-    },
+    // computed: {
+    //   searchResults() {
+    //     return this.$store.state.results;
+    //   },
+    //   playlist() {
+    //     return this.$store.state.playlist;
+    //   }
+    // },
     methods: {
       getQuery(event) {
-        let search = "search?term=" + event.target.name.value
+        let search = "search?term=" + this.query
         this.$store.dispatch("getQuery", search)
-      },
-      addToPlaylist(data) {
-        let song = {
-          "trackName": data.trackName,
-          "artistName": data.artistName,
-          "collectionName": data.collectionName,
-          "previewUrl": data.previewUrl,
-          "albumArt": data.artworkUrl100,
-          "trackId": data.trackId
-        }
-        this.$store.dispatch("addToPlaylist", song)
-      },
-      deleteFromPlaylist(id) {
-        this.$store.dispatch('deleteFromPlaylist', id)
-      },
-      pauseAll(e) {
-        var play = document.getElementsByTagName('audio');
-        for (var i = 0, len = play.length; i < len; i++) {
-          if (play[i] != e.target) {
-            play[i].pause();
-          }
-        }
-      },
+      }
+      // addToPlaylist(data) {
+      //   let song = {
+      //     "trackName": data.trackName,
+      //     "artistName": data.artistName,
+      //     "collectionName": data.collectionName,
+      //     "previewUrl": data.previewUrl,
+      //     "albumArt": data.artworkUrl100,
+      //     "trackId": data.trackId
+      //   }
+      //   this.$store.dispatch("addToPlaylist", song)
+      // },
+      // deleteFromPlaylist(id) {
+      //   this.$store.dispatch('deleteFromPlaylist', id)
+      // },
+      // pauseAll(e) {
+      //   var play = document.getElementsByTagName('audio');
+      //   for (var i = 0, len = play.length; i < len; i++) {
+      //     if (play[i] != e.target) {
+      //       play[i].pause();
+      //     }
+      //   }
+      // }
     }
   }
 

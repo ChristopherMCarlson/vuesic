@@ -2,9 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from './router'
-import vuescroll from 'vue-scroll'
-
-Vue.use(vuescroll)
 
 let iTunesApi = axios.create({
   baseURL: 'https://itunes.apple.com',
@@ -20,7 +17,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    results: {},
+    results: [],
     playlist: {}
   },
   mutations: {
@@ -33,7 +30,7 @@ export default new Vuex.Store({
   },
   actions: {
     getQuery({ commit, dispatch }, query) {
-      iTunesApi.get('' + query).then(res => {
+      iTunesApi.get(query).then(res => {
         commit('searchResults', res.data.results)
       })
     },
