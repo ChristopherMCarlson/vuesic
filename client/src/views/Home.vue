@@ -2,7 +2,7 @@
   <div>
     <header class="header">
       <div class="title-top">
-        Music is fun
+        Music is Fun
       </div>
       <form @submit.prevent="getQuery($event)" class="row">
         <input type="text" name="name" autocomplete="off" placeholder="Search"><br>
@@ -27,7 +27,7 @@
                     <p>Album: {{song.collectionName}}</p>
                   </div>
                   <div class="card-half">
-                    <audio controls :src=song.previewUrl type="audio/mpeg" />
+                    <audio controls :src=song.previewUrl type="audio/mpeg" @play="pauseAll" />
                     <button class="button" @click="deleteFromPlaylist(song._id)">
                       Remove from playlist
                     </button>
@@ -52,7 +52,7 @@
                     <p>Album: {{song.collectionName}}</p>
                   </div>
                   <div class="card-half">
-                    <audio controls :src=song.previewUrl type="audio/mpeg" />
+                    <audio controls :src=song.previewUrl type="audio/mpeg" @play="pauseAll" />
                     <button class="button" @click="addToPlaylist(song)">
                       Add to playlist
                     </button>
@@ -105,9 +105,18 @@
       },
       deleteFromPlaylist(id) {
         this.$store.dispatch('deleteFromPlaylist', id)
-      }
+      },
+      pauseAll(e) {
+        var play = document.getElementsByTagName('audio');
+        for (var i = 0, len = play.length; i < len; i++) {
+          if (play[i] != e.target) {
+            play[i].pause();
+          }
+        }
+      },
     }
   }
+
 
 </script>
 
@@ -123,6 +132,7 @@
     align-content: center;
     height: 5%;
     color: #d3d5fd;
+    white-space: nowrap;
   }
 
   .title-top {
